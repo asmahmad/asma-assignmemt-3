@@ -7,11 +7,9 @@ import java.io.IOException;
 
 public class UserService {
 	
-	public 	User[] user = new User[4];
-	int i =0;
-
-	public  void createUser() {
-		
+	public 	User[] users = new User[4];
+	
+	public  void createUser() {	
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader("data.txt"));
@@ -19,41 +17,34 @@ public class UserService {
 			e1.printStackTrace();
 		}	
 		String line;
-		
 		try {
-			while (( line=reader.readLine() ) != null) {
-				
-				String[] fileInput = line.split(",");
-				user[i].setUserName(fileInput[0]);
-				user[i].setPassword(fileInput[1]);
-				user[i].setName(fileInput[2]);
-				i++;
-			}
-		} catch (IOException e) {
+				int i =0;	
+				while (( line=reader.readLine() ) != null) {
+					String[] fileInput = line.split(",");
+					User newUser = new User(fileInput[0],fileInput[1],fileInput[2]);
+//					newUser.setUserName(fileInput[0]);
+//					newUser.setPassword(fileInput[1]);
+//					newUser.setName(fileInput[2]);
+					users[i]  = new User(newUser);
+					i++;
+				}
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-	
 	}
-	public int validateUser (String inputUser, String InputPassword) {
-		int match=0;
-		for (int i=0; i<5; i++) {
-			
-
-			if (	(user[i].getUserName().equalsIgnoreCase(inputUser)) && (user[i].getPassword().equals(InputPassword))) {
-				System.out.println("Welcome " + user[i].getName());
-				match = 1;
+    public boolean validateUser (String inputUser, String InputPassword) {
+		boolean matchCheck= false;
+		for (int i= 0; i< 4; i++) {
+			if ((users[i].getUserName().equalsIgnoreCase(inputUser)) && (users[i].getPassword().equals(InputPassword))) {
+				System.out.println("Welcome: " + users[i].getName());
+				matchCheck = true;
 				break;
-			} else {
-				System.out.println("Invalid login, please try again.");
-				match = 0;
+			}else {
+				matchCheck = false;	
 			}
-
-		}
-
-		return match;
-		
-	}
+	    }
+	  return matchCheck;
+   }
 }
 
 		

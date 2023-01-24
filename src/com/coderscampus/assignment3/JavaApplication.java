@@ -5,23 +5,29 @@ import java.util.Scanner;
 public class JavaApplication {
 
 	public static void main(String[] args) {
-		int counter;
-		for (int i=0; i < 5; i++) {
-				Scanner scanner = new Scanner(System.in);
+		Scanner scanner=new Scanner(System.in);;
+		try {
+			int counter=0;
+			for(int i=0; i < 5; i++) {
 				UserService service = new UserService();
 				service.createUser();
 				System.out.println("Enter username");
 				String inputName = scanner.nextLine();
 				System.out.println("Enter Password");
 				String inputPassword = scanner.nextLine();
-				counter = service.validateUser(inputName, inputPassword);
-				
-					if  (counter == 1) {
+				if(service.validateUser(inputName, inputPassword)) {
 						break;				
-					}
-				
+				}else{
+					System.out.println("Invalid login, please try again.");
+				}
+				counter++;
+			}
+			if(counter == 5) {
+				System.out.println("\nToo many failed login attempts, you are now locked out.");
+			}
+		}finally {
+			scanner.close();
 		}
-
+	
 	}
-
 }
