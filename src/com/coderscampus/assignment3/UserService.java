@@ -22,9 +22,6 @@ public class UserService {
 				while (( line=reader.readLine() ) != null) {
 					String[] fileInput = line.split(",");
 					User newUser = new User(fileInput[0],fileInput[1],fileInput[2]);
-//					newUser.setUserName(fileInput[0]);
-//					newUser.setPassword(fileInput[1]);
-//					newUser.setName(fileInput[2]);
 					users[i]  = new User(newUser);
 					i++;
 				}
